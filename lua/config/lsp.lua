@@ -66,6 +66,7 @@ vim.lsp.config("ruff", {
 })
 vim.lsp.enable("ruff")
 
+--[[
 vim.lsp.config("pyright", {
     cmd = { "pyright-langserver", "--stdio" },
     filetypes = { "python" },
@@ -75,9 +76,26 @@ vim.lsp.config("pyright", {
     },
 })
 vim.lsp.enable("pyright")
+--]]
+
+vim.lsp.config("ty", {
+    cmd = { "ty", "server" },
+    filetypes = { "python" },
+    root_markers = { "pyproject.toml", ".git" },
+})
+vim.lsp.enable("ty")
 
 -- Use Python venv.
 vim.g.python3_host_prog = vim.fn.expand("$VIRTUAL_ENV/bin/python")
+
+-- Configure C/CPP.
+vim.lsp.config("clangd", {
+    cmd = { "clangd" },
+    filetypes = { "c", "cpp" },
+    root_markers = { ".clangd", ".git" },
+    on_attach = enable_format_on_save,
+})
+vim.lsp.enable("clangd")
 
 vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover)
 vim.keymap.set("n", "<leader>ls", vim.lsp.buf.signature_help)
